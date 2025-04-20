@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Websites to Impress Thass! | Premium Portfolio</title>
+    <title>Websites to Impress Thass!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -12,7 +12,7 @@
             --dark: #1a1a2e;
             --light: #f8f9fa;
             --accent: #ff6b6b;
-            --glow: 0 0 15px rgba(110, 69, 226, 0.7);
+            --glass: rgba(255, 255, 255, 0.15);
         }
         
         * {
@@ -23,144 +23,250 @@
         }
         
         body {
-            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
         }
         
-        /* Particle background */
-        #particles-js {
+        .particles {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            top: 0;
-            left: 0;
         }
         
-        /* Header with animated gradient */
         header {
-            background: linear-gradient(90deg, 
-                rgba(110, 69, 226, 0.8) 0%, 
-                rgba(136, 211, 206, 0.8) 100%);
-            padding: 3rem 2rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--glow);
-            animation: gradientShift 8s ease infinite;
-            background-size: 200% 200%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 15s infinite linear;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-size: 4rem;
             margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 800;
-            background: linear-gradient(to right, #fff 0%, #88d3ce 100%);
+            background: linear-gradient(to right, #fff, #88d3ce);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '✨';
+            position: absolute;
+            right: -40px;
+            top: -10px;
+            font-size: 2rem;
+            animation: sparkle 2s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
         
         .subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-size: 1.2rem;
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         
-        /* Floating 3D card container */
-        .portfolio-container {
+        .container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .sites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 3rem;
-            perspective: 1000px;
         }
         
-        /* 3D Card effect */
-        .portfolio-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+        .site-card {
+            background: linear-gradient(145deg, rgba(46, 39, 87, 0.7), rgba(25, 29, 49, 0.7));
             border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform-style: preserve-3d;
-            position: relative;
             overflow: hidden;
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(50px);
-            will-change: transform, opacity;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .portfolio-card.visible {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
+        .site-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
         
-        .portfolio-card::before {
+        .site-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, 
-                transparent 0%, 
-                rgba(110, 69, 226, 0.1) 50%, 
-                transparent 100%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-        
-        .portfolio-card:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 15px 35px rgba(110, 69, 226, 0.4), 
-                        0 5px 15px rgba(136, 211, 206, 0.3);
-        }
-        
-        .portfolio-card:hover::before {
-            transform: translateX(100%);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            pointer-events: none;
         }
         
         .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
         
-        .card-title {
+        .card-header h3 {
             font-size: 1.5rem;
-            font-weight: 600;
+            margin-bottom: 0.5rem;
             color: white;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card-header h3 i {
+            color: var(--secondary);
+        }
+        
+        .card-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
         
         .card-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
             background: var(--accent);
-            color: white;
-            padding: 0.3rem 0.8rem;
+            color: var(--dark);
+            padding: 0.3rem 1rem;
             border-radius: 20px;
-            font-size: 0.8rem;
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            font-size: 0.8rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
         
         .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .meta-item i {
+            color: var(--secondary);
+        }
+        
+        .card-description {
             margin-bottom: 1.5rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.8);
@@ -170,417 +276,316 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
+            padding: 0 1.5rem 1.5rem;
         }
         
-        .card-date {
+        .site-url {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 70%;
+        }
+        
+        .visit-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(110, 69, 226, 0.3);
         }
         
-        .card-link {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+        .visit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(110, 69, 226, 0.4);
         }
         
-        .card-link:hover {
-            color: white;
-            text-shadow: 0 0 10px rgba(136, 211, 206, 0.7);
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            backdrop-filter: blur(5px);
         }
         
-        /* Featured card */
-        .featured {
-            grid-column: span 2;
-            background: linear-gradient(135deg, 
-                rgba(110, 69, 226, 0.2) 0%, 
-                rgba(136, 211, 206, 0.2) 100%);
-            border: 1px solid rgba(110, 69, 226, 0.3);
+        .stat-item {
+            text-align: center;
         }
         
-        .featured .card-title {
-            font-size: 2rem;
-            background: linear-gradient(to right, #fff 0%, var(--secondary) 100%);
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
         }
         
-        /* Glowing hover effect */
-        .glow-on-hover {
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background: rgba(0, 0, 0, 0.2);
             position: relative;
-            z-index: 1;
         }
         
-        .glow-on-hover::after {
+        footer::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, 
-                rgba(110, 69, 226, 0.3) 0%, 
-                transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: -1;
-            border-radius: inherit;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
         
-        .glow-on-hover:hover::after {
-            opacity: 1;
-        }
-        
-        /* Floating action button */
-        .fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border-radius: 50%;
+        .social-links {
             display: flex;
             justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
             align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 20px rgba(110, 69, 226, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 100;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s 1s forwards;
+            justify-content: center;
+            transition: all 0.3s;
         }
         
-        .fab:hover {
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 8px 25px rgba(110, 69, 226, 0.7);
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
         }
         
-        /* Animated wave divider */
-        .wave-divider {
-            position: relative;
-            height: 150px;
-            overflow: hidden;
-            margin-top: 3rem;
+        /* Glow effects */
+        .glow {
+            animation: glow 2s infinite alternate;
         }
         
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%236e45e2" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%236e45e2" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%236e45e2"/></svg>');
-            background-size: cover;
-            background-repeat: no-repeat;
-            animation: wave 10s linear infinite;
-        }
-        
-        @keyframes wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        
-        @keyframes fadeInUp {
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(110, 69, 226, 0.5);
+            }
             to {
-                opacity: 1;
-                transform: translateY(0);
+                box-shadow: 0 0 20px rgba(110, 69, 226, 0.8);
             }
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .portfolio-container {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-            
-            .featured {
-                grid-column: span 1;
-            }
+        /* Floating animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
         }
         
-        @media (max-width: 768px) {
-            .portfolio-container {
-                padding: 1.5rem;
-            }
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--primary), var(--secondary));
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(var(--secondary), var(--primary));
-        }
-        
-        /* Floating elements animation */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
         
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 200px;
-            background-color: var(--dark);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Scroll progress indicator */
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-        
-        .progress-bar {
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.1s ease;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .filter-options {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .sites-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Scroll progress bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <!-- Particle.js background -->
+    <div class="particles" id="particles-js"></div>
     
-    <!-- Particle.js Background -->
-    <div id="particles-js"></div>
-    
-    <!-- Header with animated gradient -->
     <header>
         <h1>Websites to Impress Thass!</h1>
-        <p class="subtitle">Premium Web Development Portfolio - Cutting-edge designs with advanced functionality</p>
+        <p class="subtitle">A showcase of premium web development projects crafted with cutting-edge technologies and innovative design</p>
     </header>
     
-    <!-- Wave divider -->
-    <div class="wave-divider">
-        <div class="wave"></div>
-    </div>
-    
-    <!-- Main portfolio grid -->
-    <div class="portfolio-container">
-        <!-- Featured site -->
-        <div class="portfolio-card featured glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">DeepSeek Offline</h2>
-                <span class="card-badge">FEATURED</span>
+    <div class="container">
+        <div class="filter-bar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search sites...">
             </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 19</span>
-                </div>
-                <a href="https://deepseekoffline.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
+            <div class="filter-options">
+                <button class="filter-btn active"><i class="fas fa-globe"></i> All Sites</button>
+                <button class="filter-btn"><i class="fas fa-star"></i> Featured</button>
+                <button class="filter-btn"><i class="fas fa-code-branch"></i> GitHub</button>
+                <button class="filter-btn"><i class="fas fa-calendar-alt"></i> Recent</button>
             </div>
         </div>
         
-        <!-- Regular sites -->
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">Offline AI</h2>
-                <span class="card-badge">NEW</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 19</span>
+        <div class="sites-grid">
+            <!-- Site Card 1 -->
+            <div class="site-card float">
+                <div class="card-header">
+                    <div class="card-badge">NEW</div>
+                    <h3><i class="fas fa-robot"></i> offline-ai</h3>
+                    <p>Advanced offline AI solution</p>
                 </div>
-                <a href="https://offline-ai.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">LoveBar</h2>
-                <span class="card-badge">TRENDING</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 18</span>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 13 hours ago</span>
+                    </div>
+                    <p class="card-description">A revolutionary AI platform that works completely offline, providing privacy-focused machine learning capabilities.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://offline-ai.netlify.app</div>
+                        <button class="visit-btn">Visit <i class="fas fa-external-link-alt"></i></button>
+                    </div>
                 </div>
-                <a href="https://lovebar.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">MeetTrivedi</h2>
-                <span class="card-badge">PRO</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 18</span>
-                </div>
-                <a href="https://meettrivedi.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">WebSwipe</h2>
-                <span class="card-badge">MOBILE</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 18</span>
-                </div>
-                <a href="https://webswipe.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">CheapShipping</h2>
-                <span class="card-badge tooltip">E-COMMERCE
-                    <span class="tooltiptext">Integrated with 15+ shipping APIs</span>
-                </span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 16</span>
-                </div>
-                <a href="https://cheapshipping.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">CarBrandModels</h2>
-                <span class="card-badge">DATABASE</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 14</span>
-                </div>
-                <a href="https://carbrandmodels.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">Aging Comparison</h2>
-                <span class="card-badge">AI</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Apr 10</span>
-                </div>
-                <a href="https://aging-comparison-site.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-        
-        <div class="portfolio-card glow-on-hover">
-            <div class="card-header">
-                <h2 class="card-title">Mobimp.be</h2>
-                <span class="card-badge">LEGACY</span>
-            </div>
-            <div class="card-footer">
-                <div class="card-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>Published on Mar 31</span>
-                </div>
-                <a href="https://mobimp.be.netlify.app" target="_blank" class="card-link">
-                    Visit Site <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Floating action button -->
-    <div class="fab tooltip">
-        <i class="fas fa-paper-plane"></i>
-        <span class="tooltiptext">Hire me for your next project!</span>
-    </div>
-    
-    <!-- Footer -->
-    <footer style="text-align: center; padding: 3rem; background: rgba(0, 0, 0, 0.3); margin-top: 3rem;">
-        <p>© 2025 Premium Web Development by Thass. All rights reserved.</p>
-    </footer>
-    
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Initialize particles.js
-        particlesJS("particles-js", {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
             
+            <!-- Site Card 2 -->
+            <div class="site-card glow">
+                <div class="card-header">
+                    <h3><i class="fas fa-brain"></i> deepseekoffline</h3>
+                    <p>Deep learning implementation</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 16 hours ago</span>
+                    </div>
+                    <p class="card-description">Cutting-edge deep learning models that operate without internet connectivity, perfect for research and development.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://deepseekoffline.netlify.app</div>
+                        <button class="visit-btn">Visit <i class="fas fa-external-link-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Site Card 3 -->
+            <div class="site-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-heart"></i> lovebar</h3>
+                    <p>Social connection platform</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 2 days ago</span>
+                    </div>
+                    <p class="card-description">A modern dating and social connection app with advanced matching algorithms and real-time communication.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://lovebar.netlify.app</div>
+                        <button class="visit-btn">Visit <i class="fas fa-external-link-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Site Card 4 -->
+            <div class="site-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-tie"></i> meettrivedi</h3>
+                    <p>Professional portfolio</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 2 days ago</span>
+                    </div>
+                    <p class="card-description">An elegant personal portfolio showcasing professional achievements with interactive elements and smooth animations.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://meettrivedi.netlify.app</div>
+                        <button class="visit-btn">Visit <i class="fas fa-external-link-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Site Card 5 -->
+            <div class="site-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-swipe"></i> webswipe</h3>
+                    <p>Interactive UI showcase</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 2 days ago</span>
+                    </div>
+                    <p class="card-description">A demonstration of cutting-edge swipe gestures and touch interactions for modern web applications.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://webswipe.netlify.app</div>
+                        <button class="visit-btn">Visit <i class="fas fa-external-link-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Site Card 6 -->
+            <div class="site-card">
+                <div class="card-header">
+                    <div class="card-badge">UNAVAILABLE</div>
+                    <h3><i class="fas fa-language"></i> zoalsgezegd</h3>
+                    <p>Language learning platform</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+                        <span class="meta-item"><i class="fas fa-clock"></i> Published 2 days ago</span>
+                    </div>
+                    <p class="card-description">An immersive language learning experience with speech recognition and real-time feedback systems.</p>
+                    <div class="card-footer">
+                        <div class="site-url">https://zoalsgezegd.netlify.app</div>
+                        <button class="visit-btn" disabled>Unavailable</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Site Card 7 -->
+            <div class="site-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-comments"></i> woai</h3>
+                    <p>AI conversation platform</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="meta-item"><i class="fas fa-user"></i> Owned by adm</span>
+               
