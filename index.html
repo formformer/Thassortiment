@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Websites to Impress Thass! | Portfolio</title>
+    <title>Websites to Impress Thass! | Premium Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --dark: #1a1a2e;
             --light: #f8f9fa;
             --accent: #ff6b6b;
+            --glow: 0 0 15px rgba(110, 69, 226, 0.7);
         }
         
         * {
@@ -22,193 +23,564 @@
         }
         
         body {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
             color: var(--light);
             min-height: 100vh;
-            padding: 2rem;
+            overflow-x: hidden;
         }
         
+        /* Particle background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Header with animated gradient */
         header {
+            background: linear-gradient(90deg, 
+                rgba(110, 69, 226, 0.8) 0%, 
+                rgba(136, 211, 206, 0.8) 100%);
+            padding: 3rem 2rem;
             text-align: center;
-            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glow);
+            animation: gradientShift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         h1 {
-            font-size: 3rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff 0%, var(--secondary) 100%);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff 0%, #88d3ce 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
-        .portfolio-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.9;
+            max-width: 800px;
             margin: 0 auto;
         }
         
+        /* Floating 3D card container */
+        .portfolio-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+            perspective: 1000px;
+        }
+        
+        /* 3D Card effect */
         .portfolio-card {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
             padding: 1.5rem;
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            will-change: transform, opacity;
+        }
+        
+        .portfolio-card.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+        
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(110, 69, 226, 0.1) 50%, 
+                transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
         
         .portfolio-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 35px rgba(110, 69, 226, 0.4), 
+                        0 5px 15px rgba(136, 211, 206, 0.3);
+        }
+        
+        .portfolio-card:hover::before {
+            transform: translateX(100%);
         }
         
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
         
         .card-title {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
         
-        .card-date {
+        .card-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+        
+        .card-content {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
         }
         
+        .card-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
         .card-link {
-            display: inline-block;
-            margin-top: 1rem;
             color: var(--secondary);
             text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .card-link:hover {
-            text-decoration: underline;
+            color: white;
+            text-shadow: 0 0 10px rgba(136, 211, 206, 0.7);
+        }
+        
+        /* Featured card */
+        .featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, 
+                rgba(110, 69, 226, 0.2) 0%, 
+                rgba(136, 211, 206, 0.2) 100%);
+            border: 1px solid rgba(110, 69, 226, 0.3);
+        }
+        
+        .featured .card-title {
+            font-size: 2rem;
+            background: linear-gradient(to right, #fff 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Glowing hover effect */
+        .glow-on-hover {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .glow-on-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, 
+                rgba(110, 69, 226, 0.3) 0%, 
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+            border-radius: inherit;
+        }
+        
+        .glow-on-hover:hover::after {
+            opacity: 1;
+        }
+        
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(110, 69, 226, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s 1s forwards;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(110, 69, 226, 0.7);
+        }
+        
+        /* Animated wave divider */
+        .wave-divider {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%236e45e2" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%236e45e2" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%236e45e2"/></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            animation: wave 10s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .portfolio-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .featured {
+                grid-column: span 1;
+            }
         }
         
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
             .portfolio-container {
-                grid-template-columns: 1fr;
+                padding: 1.5rem;
             }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--secondary), var(--primary));
+        }
+        
+        /* Floating elements animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Scroll progress indicator */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.1s ease;
         }
     </style>
 </head>
 <body>
+    <!-- Scroll progress bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Header with animated gradient -->
     <header>
         <h1>Websites to Impress Thass!</h1>
-        <p>My Recent Web Development Projects</p>
+        <p class="subtitle">Premium Web Development Portfolio - Cutting-edge designs with advanced functionality</p>
     </header>
     
+    <!-- Wave divider -->
+    <div class="wave-divider">
+        <div class="wave"></div>
+    </div>
+    
+    <!-- Main portfolio grid -->
     <div class="portfolio-container">
-        <!-- Recent Projects -->
-        <div class="portfolio-card">
+        <!-- Featured site -->
+        <div class="portfolio-card featured glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">DeepSeek Offline</h2>
-                <span class="card-date">Apr 19</span>
+                <span class="card-badge">FEATURED</span>
             </div>
-            <a href="https://deepseekoffline.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 19</span>
+                </div>
+                <a href="https://deepseekoffline.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <!-- Regular sites -->
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">Offline AI</h2>
-                <span class="card-date">Apr 19</span>
+                <span class="card-badge">NEW</span>
             </div>
-            <a href="https://offline-ai.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 19</span>
+                </div>
+                <a href="https://offline-ai.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">LoveBar</h2>
-                <span class="card-date">Apr 18</span>
+                <span class="card-badge">TRENDING</span>
             </div>
-            <a href="https://lovebar.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 18</span>
+                </div>
+                <a href="https://lovebar.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">MeetTrivedi</h2>
-                <span class="card-date">Apr 18</span>
+                <span class="card-badge">PRO</span>
             </div>
-            <a href="https://meettrivedi.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 18</span>
+                </div>
+                <a href="https://meettrivedi.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">WebSwipe</h2>
-                <span class="card-date">Apr 18</span>
+                <span class="card-badge">MOBILE</span>
             </div>
-            <a href="https://webswipe.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 18</span>
+                </div>
+                <a href="https://webswipe.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">CheapShipping</h2>
-                <span class="card-date">Apr 16</span>
+                <span class="card-badge tooltip">E-COMMERCE
+                    <span class="tooltiptext">Integrated with 15+ shipping APIs</span>
+                </span>
             </div>
-            <a href="https://cheapshipping.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 16</span>
+                </div>
+                <a href="https://cheapshipping.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">CarBrandModels</h2>
-                <span class="card-date">Apr 14</span>
+                <span class="card-badge">DATABASE</span>
             </div>
-            <a href="https://carbrandmodels.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 14</span>
+                </div>
+                <a href="https://carbrandmodels.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">Aging Comparison</h2>
-                <span class="card-date">Apr 10</span>
+                <span class="card-badge">AI</span>
             </div>
-            <a href="https://aging-comparison-site.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Apr 10</span>
+                </div>
+                <a href="https://aging-comparison-site.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
         
-        <div class="portfolio-card">
+        <div class="portfolio-card glow-on-hover">
             <div class="card-header">
                 <h2 class="card-title">Mobimp.be</h2>
-                <span class="card-date">Mar 31</span>
+                <span class="card-badge">LEGACY</span>
             </div>
-            <a href="https://mobimp.be.netlify.app" target="_blank" class="card-link">
-                Visit Site <i class="fas fa-external-link-alt"></i>
-            </a>
+            <div class="card-footer">
+                <div class="card-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Published on Mar 31</span>
+                </div>
+                <a href="https://mobimp.be.netlify.app" target="_blank" class="card-link">
+                    Visit Site <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
         </div>
     </div>
-
+    
+    <!-- Floating action button -->
+    <div class="fab tooltip">
+        <i class="fas fa-paper-plane"></i>
+        <span class="tooltiptext">Hire me for your next project!</span>
+    </div>
+    
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 3rem; background: rgba(0, 0, 0, 0.3); margin-top: 3rem;">
+        <p>© 2025 Premium Web Development by Thass. All rights reserved.</p>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Make all links open in new tab if they don't already have target="_blank"
-        document.querySelectorAll('a').forEach(link => {
-            if (!link.hasAttribute('target')) {
-                link.setAttribute('target', '_blank');
-            }
-        });
-    </script>
-</body>
-</html>
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+            
